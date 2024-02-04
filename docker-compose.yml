@@ -1,12 +1,12 @@
 version: "3.1"
 
 services:
-  wordpress:
+  wordpress-blog:
     image: wordpress
     container_name: wordpress-blog
     restart: always
     environment:
-      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_HOST: wordpress-blog-db
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
@@ -19,16 +19,18 @@ services:
     env_file:
       - .env
 
-  db:
+  wordpress-blog-db:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: exampledb
-      MYSQL_USER: exampleuser
-      MYSQL_PASSWORD: examplepass
+      MYSQL_DATABASE: ${WORDPRESS_DB_NAME}
+      MYSQL_USER: ${WORDPRESS_DB_USER}
+      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD}
       MYSQL_RANDOM_ROOT_PASSWORD: "1"
     volumes:
       - db:/var/lib/mysql
+    env_file:
+      - .env
 
 volumes:
   wordpress:
