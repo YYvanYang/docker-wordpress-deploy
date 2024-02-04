@@ -1,0 +1,38 @@
+version: "3.1"
+
+services:
+  wordpress:
+    image: wordpress
+    container_name: wordpress-blog
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+      VIRTUAL_HOST: subdomain.yourdomain.tld
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: subdomain.yourdomain.tld
+      LETSENCRYPT_EMAIL: mail@yourdomain.tld
+    volumes:
+      - wordpress:/var/www/html
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
+
+networks:
+  default:
+    name: nginx-proxy
+    external: true
