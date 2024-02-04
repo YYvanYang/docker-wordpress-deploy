@@ -1,12 +1,11 @@
 version: "3.1"
 
 services:
-  wordpress-blog:
+  wordpress:
     image: wordpress
-    container_name: wordpress-blog
     restart: always
     environment:
-      WORDPRESS_DB_HOST: wordpress-blog-db
+      WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
@@ -19,7 +18,7 @@ services:
     env_file:
       - .env
 
-  wordpress-blog-db:
+  db:
     image: mysql:8.0
     restart: always
     environment:
