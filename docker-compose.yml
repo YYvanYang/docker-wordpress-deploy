@@ -4,6 +4,8 @@ services:
   wordpress:
     image: wordpress
     restart: always
+    expose:
+      - 80
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
